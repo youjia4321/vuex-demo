@@ -3,12 +3,29 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-
-export default new Vuex.Store({
+const store = new Vuex.Store({
     state: {
         isLogin: false, //登录状态
         username: '', //用户名
-        password: '' //密码
+        password: '', //密码
+        list: [
+            { name: '张三', checked: true },
+            { name: '李四', checked: false },
+            { name: '哪吒', checked: true },
+            { name: '敖丙', checked: false },
+            { name: '申公豹', checked: true },
+            { name: '太乙真人', checked: true },
+        ]
+    },
+    // getters: {
+    //     showChecked: state => {
+    //         return state.list.filter(item => item.checked)
+    //     }
+    // },
+    getters: {
+        showChecked: (state) => (checked) => {
+            return state.list.filter(item => item.checked === checked)
+        }
     },
     mutations: {
         // 修改登录状态
@@ -25,3 +42,5 @@ export default new Vuex.Store({
         }
     }
 })
+
+export default store

@@ -1,7 +1,6 @@
 <template>
   <div class="login">
     登录状态：{{ $store.state.isLogin }}
-    <br />登录页
     <br />
     <i-Input
       type="text"

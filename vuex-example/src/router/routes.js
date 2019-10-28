@@ -10,6 +10,6 @@ export default [
     {
         path: '/login',
         component: Login,
-        meta: { auth: true }
+        meta: { auth: false }
     }
 ]

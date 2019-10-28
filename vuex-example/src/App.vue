@@ -7,10 +7,11 @@
 <script>
 export default {
   name: "app",
-  created() {},
-  methods: {}
 };
 </script>
 
 <style>
+#app {
+  padding: 20px;
+}
 </style>

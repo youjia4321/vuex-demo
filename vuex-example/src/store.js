@@ -14,12 +14,12 @@ const store = new Vuex.Store({
         username: '', //用户名
         password: '', //密码
         list: [
-            { name: '张三', checked: true },
-            { name: '李四', checked: false },
-            { name: '哪吒', checked: true },
-            { name: '敖丙', checked: false },
-            { name: '申公豹', checked: true },
-            { name: '太乙真人', checked: true },
+            { name: '钢铁侠', checked: true },
+            { name: '美国队长', checked: false },
+            { name: '黑寡妇', checked: true },
+            { name: '雷神', checked: false },
+            { name: '黑豹', checked: true },
+            { name: '蜘蛛侠', checked: true },
         ],
         songs: [
             { name: '黑色毛衣', singer: '周杰伦' },
@@ -38,7 +38,10 @@ const store = new Vuex.Store({
     //     }
     // },
     getters: {
-        showChecked: (state) => (checked) => {
+        showChecked: state => {
+            return state.list.filter(item => item.checked)
+        },
+        showChecked2: (state) => (checked) => {
             return state.list.filter(item => item.checked === checked)
         },
         showSongs: state => {
@@ -77,6 +80,46 @@ const store = new Vuex.Store({
         },
         resetCount(state, payload) {
             state.count = payload.data;
+        }
+    },
+    // 在mutation中混合异步调用会导致你的程序很难调试。
+    // 例如当你调用了两个包含异步回调的mutation来改变状态，你怎么知道什么时候回调和哪个先回调呢？这就是为什么我们要区分这两个概念。
+    // 在Vuex中，mutation都是同步事务。为了处理异步操作，让我们来看一看Action.
+
+    // Action类似于Mutation，不同在于：
+
+    // Action提交的是mutation，而不是直接变更状态
+    // Action可以包含任意异步操作
+    // actions: {
+    //     // Action函数接受一个与store实例具有相同方法和属性的context对象，
+    //     // 因此你可以调用context.commit提交一个mutation，或者通过context.state和context.getters来获取state和getters
+    //     // 实践中，可以用参数结构来简化代码
+    //     changeLogin(context) {
+    //         console.log(context)
+    //         context.commit('changeLogin')
+    //     },
+    //     changeUsername(context) {
+    //         context.commit('changeUsername')
+    //     },
+    //     changePassword(context) {
+    //         context.commit('changePassword')
+    //     }
+    // }
+    actions: {
+        changeLogin2({ commit }, data) {
+            commit('changeLogin', data)
+        },
+        // changeUsername(context, data) {
+        //     context.commit('changeUsername', data)
+        // },
+        changeUsername2({ commit }, data) {
+            commit('changeUsername', data)
+        },
+        // 可以进行异步操作
+        changePassword2(context, data) {
+            setTimeout(() => {
+                context.commit('changePassword', data)
+            }, 1000)
         }
     }
 })

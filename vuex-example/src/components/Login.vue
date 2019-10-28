@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { mapActions, mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -34,16 +35,19 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["changeLogin2", "changeUsername2", "changePassword2"]),
+    ...mapMutations(["changeLogin", "changeUsername", "changePassword"]),
     loginHandle() {
       // 表单验证
       if (!this.username || !this.password) return;
 
       // 修改isLogin状态
-      this.$store.commit("changeLogin", true);
+      this.changeLogin2(true);
       // 修改username状态
-      this.$store.commit("changeUsername", this.username);
+      this.changeUsername2(this.username);
       // 修改password状态
-      this.$store.commit("changePassword", this.password);
+      // this.$store.commit("changePassword", this.password); // 没包含异步操作
+      this.changePassword2(this.password);  // 包含异步操作
 
       this.$router.push("/"); // 跳到首页
 

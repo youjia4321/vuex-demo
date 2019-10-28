@@ -8,7 +8,7 @@
     <br />
     密码：{{ password }}
     <br />
-    总和： {{ sum }}
+    总和：a + b = {{ sum }}
     <hr />
     <div>
       <div>
@@ -26,6 +26,7 @@
         <li v-for="(item, index) in showSongs" :key="index">{{item.name}} - {{item.singer}}</li>
       </ul>
     </div>
+    <hr />
     <p>{{ count }}</p>
     <Button @click="add">+</Button>
     <Button @click="reset">reset</Button>
@@ -47,14 +48,17 @@ export default {
       checkList: []
     };
   },
+  created() {
+    this.getChecked(true);
+  },
   methods: {
     getChecked(checked) {
-      console.log(this.$store.getters.showChecked(checked));
-      this.checkList = this.$store.getters.showChecked(checked);
+      console.log(this.$store.getters.showChecked2(checked));
+      this.checkList = this.showChecked2(checked);
     },
-    logout(){
+    logout() {
       this.$store.state.isLogin = false;
-      this.$router.push('/login')
+      this.$router.push("/login");
     },
     // method1
     ...mapMutations(["addCount", "resetCount"]),
@@ -64,6 +68,7 @@ export default {
     reset() {
       this.resetCount({ data: 0 });
     }
+
     // memthod2
     // add() {
     //   this.$store.commit({
@@ -77,6 +82,7 @@ export default {
     //     data: 0
     //   });
     // },
+
     // method3
     // ...mapMutations({
     //   theAdd: 'addCount',
@@ -96,15 +102,16 @@ export default {
       return this.a + this.b;
     },
     showChecked() {
-      return this.$store.getters.showChecked;
+      return this.showChecked;
     },
-    ...mapState({
-      isLogin: state => state.isLogin,
-      username: state => state.username,
-      password: state => state.password,
-      count: state => state.count
-    }),
-    ...mapGetters(["showSongs"])
+    // ...mapState({
+    //   isLogin: state => state.isLogin,
+    //   username: state => state.username,
+    //   password: state => state.password,
+    //   count: state => state.count
+    // }),
+    ...mapState(["isLogin", "username", "password", "count"]),
+    ...mapGetters(["showSongs", "showChecked", "showChecked2"])
   }
 };
 </script>
@@ -112,5 +119,8 @@ export default {
 <style scoped>
 a:focus {
   color: red;
+}
+li {
+  display: block;
 }
 </style>
